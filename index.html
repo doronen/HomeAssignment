@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        let i = 0;
+        let users = null;
+        async function initComponents() {
+            await fetch(`https://jsonplaceholder.typicode.com/users`)
+                .then((response) => response.json())
+                .then((usersArr) => {
+                    users = usersArr;
+                });
+        }
+        function nextPerson() {
+            i++;
+            if (i >= users.length) {
+                i = 1;
+            }
+            if (users[i].address.geo.lat > 0) {
+                document.getElementById('result').innerText = users[i].name;
+            }
+            else nextPerson();
+        }
+    </script>
+</head>
+
+<body onload="initComponents()">
+    <div class="container">
+        <div id="result"></div>
+        <button onclick="nextPerson()">Next Person</button>
+    </div>
+
+</body>
+
+</html>
